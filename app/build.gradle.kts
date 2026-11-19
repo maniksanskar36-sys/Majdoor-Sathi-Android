@@ -37,3 +37,4 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database")
 }
+implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
