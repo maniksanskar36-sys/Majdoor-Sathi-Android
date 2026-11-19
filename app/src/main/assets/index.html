@@ -509,7 +509,39 @@ $("profileData").innerHTML=
 "<p class='small'>प्रोफाइल Firebase में सेव है।</p>";  
 }  
   
-function premium(){  
+
+function premium(){
+  openScreen("premiumScreen");
+  renderPremiumQR();
+}
+
+function renderPremiumQR(){
+  const upiId = "8770168493-@axl";
+  const name = "Sangeeta Manik";
+
+  const upiLink =
+    "upi://pay?pa=" + encodeURIComponent(upiId) +
+    "&pn=" + encodeURIComponent(name) +
+    "&am=10&cu=INR&tn=" +
+    encodeURIComponent("Majdoor Sathi Lifetime Premium");
+
+  const qr = document.getElementById("premiumQR");
+
+  qr.innerHTML =
+    '<img alt="UPI Payment QR Code" width="220" height="220" ' +
+    'src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' +
+    encodeURIComponent(upiLink) + '">';
+}
+
+function payPremium(){
+  const upiLink =
+    "upi://pay?pa=8770168493-%40axl" +
+    "&pn=Sangeeta%20Manik&am=10&cu=INR" +
+    "&tn=Majdoor%20Sathi%20Premium";
+
+  window.location.href = upiLink;
+}
+  
 alert("Premium Lifetime ₹10 फीचर जल्द शुरू होगा। अभी भुगतान चालू नहीं है।");  
 }  
   
