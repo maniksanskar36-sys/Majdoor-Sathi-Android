@@ -1,4 +1,3 @@
-
 package com.majdoorsathi.app
 
 import android.os.Bundle
@@ -7,9 +6,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.view.Gravity
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
