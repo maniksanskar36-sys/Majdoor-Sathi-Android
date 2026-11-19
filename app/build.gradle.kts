@@ -34,7 +34,8 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.10.0")
 
     implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
-    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth") 
+    implementation("androidx.browser:browser:1.8.0")
     implementation("com.google.firebase:firebase-database")
 
 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
