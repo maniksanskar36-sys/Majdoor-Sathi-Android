@@ -33,10 +33,11 @@ class MainActivity : Activity() {
             ): Boolean {
                 val url = request.url.toString()
 
-                if (url.startsWith("tel:") ||
-                    url.startsWith("https://wa.me/") ||
-                    url.startsWith("whatsapp:")) {
-                    try {
+                if (url.startsWith("upi:") ||
+    url.startsWith("tel:") ||
+    url.startsWith("https://wa.me/") ||
+    url.startsWith("whatsapp:")) {
+    try {
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                     } catch (e: Exception) {
                         Toast.makeText(
