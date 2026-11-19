@@ -1,59 +1,107 @@
+
 package com.majdoorsathi.app
 
-import android.os.Bundle
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.view.Gravity
-import android.graphics.Color
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.webkit.*
+import android.widget.Toast
 
 class MainActivity : Activity() {
+
+    private lateinit var webView: WebView
+    private var fileCallback: ValueCallback<Array<Uri>>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val layout = LinearLayout(this)
-        layout.orientation = LinearLayout.VERTICAL
-        layout.gravity = Gravity.CENTER
-        layout.setPadding(30, 30, 30, 30)
-        layout.setBackgroundColor(Color.rgb(7, 27, 53))
+        webView = WebView(this)
 
-        val title = TextView(this)
-        title.text = "मजदूर साथी"
-        title.textSize = 30f
-        title.setTextColor(Color.WHITE)
-        title.gravity = Gravity.CENTER
+        webView.settings.apply {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+            allowFileAccess = true
+            javaScriptCanOpenWindowsAutomatically = true
+            setSupportMultipleWindows(false)
+        }
 
-        val subtitle = TextView(this)
-        subtitle.text = "मजदूर और काम देने वालों का अपना मंच"
-        subtitle.textSize = 16f
-        subtitle.setTextColor(Color.WHITE)
-        subtitle.gravity = Gravity.CENTER
+        webView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(
+                view: WebView,
+                request: WebResourceRequest
+            ): Boolean {
+                val url = request.url.toString()
 
-        val worker = Button(this)
-        worker.text = "मजदूर रजिस्ट्रेशन"
+                if (url.startsWith("tel:") ||
+                    url.startsWith("https://wa.me/") ||
+                    url.startsWith("whatsapp:")) {
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "यह ऐप उपलब्ध नहीं है",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    return true
+                }
 
-        val employer = Button(this)
-        employer.text = "मालिक रजिस्ट्रेशन"
+                return false
+            }
+        }
 
-        val jobs = Button(this)
-        jobs.text = "काम खोजें"
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onShowFileChooser(
+                view: WebView,
+                callback: ValueCallback<Array<Uri>>,
+                params: FileChooserParams
+            ): Boolean {
+                fileCallback?.onReceiveValue(null)
+                fileCallback = callback
 
-        val post = Button(this)
-        post.text = "काम पोस्ट करें"
+                val intent = params.createIntent()
+                return try {
+                    startActivityForResult(intent, 100)
+                    true
+                } catch (e: Exception) {
+                    fileCallback = null
+                    false
+                }
+            }
+        }
 
-        val helpline = Button(this)
-        helpline.text = "हेल्पलाइन: 6267211174"
+        setContentView(webView)
+        webView.loadUrl("file:///android_asset/index.html")
+    }
 
-        layout.addView(title)
-        layout.addView(subtitle)
-        layout.addView(worker)
-        layout.addView(employer)
-        layout.addView(jobs)
-        layout.addView(post)
-        layout.addView(helpline)
+    @Deprecated("Deprecated in Android")
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-        setContentView(layout)
+        if (requestCode == 100) {
+            val result = if (resultCode == RESULT_OK) {
+                WebChromeClient.FileChooserParams.parseResult(
+                    resultCode, data
+                )
+            } else null
+
+            fileCallback?.onReceiveValue(result)
+            fileCallback = null
+        }
+    }
+
+    @Deprecated("Deprecated in Android")
+    override fun onBackPressed() {
+        if (::webView.isInitialized && webView.canGoBack()) {
+            webView.goBack()
+        } else {
+            super.onBackPressed()
+        }
     }
 }
