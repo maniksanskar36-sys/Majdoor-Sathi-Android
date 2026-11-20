@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "865403095956",
+    "firebase_url": "https://majdoor-sathi-1dc97-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "majdoor-sathi-1dc97",
+    "storage_bucket": "majdoor-sathi-1dc97.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865403095956:android:a25d03863dea86d951dd81",
+        "android_client_info": {
+          "package_name": "com.majdoorsathi.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtMkYSZA1wGUHBxTvcISSVZleY-_F0HSY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
