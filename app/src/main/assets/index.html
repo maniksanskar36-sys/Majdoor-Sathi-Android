@@ -542,8 +542,7 @@ function payPremium(){
   window.location.href = upiLink;
 }
   
-alert("Premium Lifetime ₹10 फीचर जल्द शुरू होगा। अभी भुगतान चालू नहीं है।");  
-}  
+alert("Premium Lifetime ₹10 फीचर जल्द शुरू होगा। अभी भुगतान चालू नहीं है।");
   
 async function loadDistricts(stateId,districtId){  
 const state=$(stateId).value;  
@@ -563,7 +562,10 @@ match.districts.forEach(d=>list.appendChild(new Option(d,d)));
 console.log("District list load nahi hui",error);  
 }  
 }  
-  
+function startApp() {
+    document.getElementById("language").style.display = "none";
+    document.getElementById("role").style.display = "block";
+}
 fillStates();  
 </script>  </body>  
 </html>  
